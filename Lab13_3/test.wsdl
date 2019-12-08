@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="http://webservices.belavia.by/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://webservices.belavia.by/">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <img src="webservice.jpg" />
+    </wsdl:documentation>
+
+    <wsdl:types>
+        <s:schema>
+            <s:element name="GetAirportsList">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetAirportsListResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetAirportsListResult" type="tns:AirportsResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="AirportsResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="Airport" type="tns:Airport"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="Airport">
+                <s:attribute name="IATA" type="s:string"/>
+                <s:attribute name="Name" type="s:string"/>
+            </s:complexType>
+        </s:schema>
+    </wsdl:types>
+
+    <wsdl:message name="GetTimeTableSoapIn">
+        <wsdl:part name="parameters" element="tns:GetTimeTable"/>
+    </wsdl:message>
+    <wsdl:message name="GetTimeTableSoapOut">
+        <wsdl:part name="parameters" element="tns:GetTimeTableResponse"/>
+    </wsdl:message>
+
+
+    <wsdl:binding name="OnlineTimeTableSoap" type="tns:OnlineTimeTableSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetTimeTable">
+            <soap:operation soapAction="http://webservices.belavia.by/GetTimeTable" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
+ 
